@@ -1,0 +1,91 @@
+%%matrix decalration and finding the  column space, row space and null
+%%space and left null space
+clear;clc;clear all variables;
+B=randi(7,3,2);
+C=randi(7,2,3);
+A=B*C;
+rank(A);
+Y=sym(A);
+Y
+CS = colspace(Y)
+RS = colspace(Y')
+NS = null(Y)
+LNS = null(Y')
+%%
+%%plotting the figures column space - left null space
+figure(1)
+plot3([0 CS(1,1)],[0 CS(2,1)],[0 CS(3,1)],'r','linew',3)
+hold on
+plot3([0 CS(1,2)],[0 CS(2,2)],[0 CS(3,2)],'b','linew',3)
+legend('CS - Column 1','CS - Column 2')
+hold on 
+plot3([0 LNS(1,1)],[0 LNS(2,1)],[0 LNS(3,1)],'g','linew',3)
+legend('CS - Column 1','CS - Column 2','LNS - Column 1')
+title('Column Space - Left Null Space Plot')
+hold off
+%%
+%%plotting the figure row space - null space
+figure(2)
+plot3([0 RS(1,1)],[0 RS(2,1)],[0 RS(3,1)],'r','linew',3)
+hold on
+plot3([0 RS(1,2)],[0 RS(2,2)],[0 RS(3,2)],'b','linew',3)
+hold on 
+plot3([0 NS(1,1)],[0 NS(2,1)],[0 NS(3,1)],'g','linew',3)
+legend('RS - Column 1','RS - Column 2','NS - Column 1')
+title('Row Space - Null Space Plot')
+hold off
+%%
+%%checking if rank of column space and left null space is equall to rows
+%%of number of rows of matrix A
+rank_CS=rank(CS);
+rank_LNS=rank(LNS);
+rank_CS_LNS=rank_CS+rank_LNS;
+nora=size(A,1);
+if rank_CS_LNS==size(A,1)
+    fprintf('Both the sum of rank of Columns Space and Left Null Space is equall to the number of rows of Matrix A\n')
+    fprintf('Rank of Column Space %d :', rank_CS )
+    fprintf('\n');
+    fprintf('Rank of Left Null Space %d :', rank_LNS)
+    fprintf('\n');
+    fprintf('Number of Rows in Matrix A %d :', nora)
+else
+    fprintf('Both the sum of rank of Columns Space and Left Null Space is not equall to the number of rows of Matrix A\n')
+end 
+%%
+%%checking if rank of row space and null space is equall to rows
+%%of number of columns of matrix A
+rank_RS=rank(RS);
+rank_NS=rank(NS);
+rank_RS_NS=rank_RS+rank_NS;
+noca=size(A,2);
+if rank_RS_NS==size(A,2)
+    fprintf('Both the sum of rank of Row Space and  Null Space is equall to the number of columns of Matrix A\n')
+    fprintf('Rank of Row Space %d :', rank_RS )
+    fprintf('\n');
+    fprintf('Rank of Null Space %d :', rank_NS)
+    fprintf('\n');
+    fprintf('Number of Columns in Matrix A %d :', noca)
+else
+    fprintf('Both the sum of rank of Columns Space and Left Null Space is not equall to the number of rows of Matrix A\n')
+end
+%%
+%%checking if column space of A*Atranspose is equall to column space of matrix A
+AAt=A*A';
+X=sym(AAt)
+CSX = colspace(X)
+if CS==CSX
+    fprintf('Both column space of A*Atranspose are same with column space of A\n')
+else
+    fprintf('Both column space of A*Atranspose are not same with column space of A\n')
+end
+%%
+%%checking if row space Atranspose*A is equall to space space of matrix A
+AtA=A'*A;
+Z=sym(AtA)
+CSY = colspace(Z)
+RSY = colspace(Y')
+if CSY==RSY
+    fprintf('Both row space of Atranspose*A are same with row space of A\n')
+else
+    fprintf('Both row space of Atranspose*A are not same with row space of A\n\n')
+end
